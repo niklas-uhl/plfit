@@ -14,9 +14,9 @@ add_library(plfit ${PLFIT_CORE_SRCS})
 target_include_directories(
   plfit PUBLIC
   ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_BINARY_DIR}/include
+  ${PROJECT_BINARY_DIR}/include
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_SOURCE_DIR}/include
+  ${PROJECT_SOURCE_DIR}/include
 )
 set_target_properties(plfit PROPERTIES SOVERSION 0)
 target_link_libraries(plfit ${MATH_LIBRARY})
