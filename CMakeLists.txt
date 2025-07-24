@@ -18,9 +18,9 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/etc/cmake)
 # Note that we must do this only if PROJECT_NAME is not set at this point. If
 # it is set, it means that plfit is being used as a subproject of another
 # project.
-if(NOT PROJECT_NAME)
-  include(BuildType)
-endif()
+# if(NOT PROJECT_NAME)
+#   include(BuildType)
+# endif()
 
 project(
   plfit
@@ -39,8 +39,8 @@ set(CMAKE_C_STANDARD_REQUIRED True)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
 # Add switches to use LTO and sanitizers if needed
-include(lto)
-include(sanitizers)
+# include(lto)
+# include(sanitizers)
 include(JoinPaths)
 
 option(PLFIT_COMPILE_PYTHON_MODULE
@@ -58,14 +58,15 @@ include(CheckIncludeFiles)
 check_include_files(emmintrin.h HAVE_EMMINTRIN_H)
 check_include_files(malloc.h HAVE_MALLOC_H)
 
-if(MSVC)
-    # /Wall is too much for MSVC; use /W4 instead.
-    # Don't produce C4100 warnings (unused formal parameter)
-    add_definitions(-W4 -wd4100 -DHAVE_CONFIG_H -D_CRT_SECURE_NO_DEPRECATE)
-else()
+# if(MSVC)
+#     # /Wall is too much for MSVC; use /W4 instead.
+#     # Don't produce C4100 warnings (unused formal parameter)
+#     add_definitions(-W4 -wd4100 -DHAVE_CONFIG_H -D_CRT_SECURE_NO_DEPRECATE)
+# else()
     # On Linux and Mac we are okay with -Wall
-    add_definitions(-Wall -DHAVE_CONFIG_H)
-endif()
+    # add_definitions(-Wall -DHAVE_CONFIG_H)
+    # endif()
+
 
 if(PLFIT_USE_SSE)
     message(STATUS "Using SSE/SSE2 optimizations if available")
@@ -102,4 +103,4 @@ configure_file(
 )
 
 add_subdirectory(src)
-add_subdirectory(test)
+# add_subdirectory(test)

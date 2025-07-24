@@ -19,16 +19,20 @@ target_include_directories(
   ${PROJECT_SOURCE_DIR}/include
 )
 set_target_properties(plfit PROPERTIES SOVERSION 0)
-target_link_libraries(plfit ${MATH_LIBRARY})
+target_link_libraries(plfit PRIVATE ${MATH_LIBRARY})
 
+target_compile_definitions(plfit PRIVATE HAVE_CONFIG_H)
+if(PLFIT_USE_SSE)
+  target_compile_definitions(plfit PRIVATE USE_SSE)
+endif()
 if(PLFIT_USE_OPENMP AND OPENMP_FOUND)
-    target_link_libraries(plfit OpenMP::OpenMP_C)
+    target_link_libraries(plfit PUBLIC OpenMP::OpenMP_C)
 endif()
 
-if(CMAKE_C_COMPILER_ID STREQUAL "GNU" AND NOT APPLE)
-  set_target_properties(plfit PROPERTIES LINK_FLAGS "-Wl,--version-script=${PROJECT_SOURCE_DIR}/src/plfit.map")
-  set_target_properties(plfit PROPERTIES LINK_DEPENDS ${PROJECT_SOURCE_DIR}/src/plfit.map)
-endif()
+# if(CMAKE_C_COMPILER_ID STREQUAL "GNU" AND NOT APPLE)
+#   set_target_properties(plfit PROPERTIES LINK_FLAGS "-Wl,--version-script=${PROJECT_SOURCE_DIR}/src/plfit.map")
+#   set_target_properties(plfit PROPERTIES LINK_DEPENDS ${PROJECT_SOURCE_DIR}/src/plfit.map)
+# endif()
 
 # Generate export header
 include(GenerateExportHeader)
